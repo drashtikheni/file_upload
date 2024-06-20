@@ -14,11 +14,6 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run format && npm run lint"
-    }
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -26,8 +21,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint ./ --ignore-path .gitignore",
     "lint:fix": "npx eslint --fix . && src/**/*.jsx",
-    "format": "prettier --write \"{,!(node_modules)/**/}*.{js,jsx,css,eslintrc,prettierrc}\"",
-    "prepare": "husky install"
+    "format": "prettier --write \"{,!(node_modules)/**/}*.{js,jsx,css,eslintrc,prettierrc}\""
   },
   "eslintConfig": {
     "extends": [
@@ -55,7 +49,6 @@
     "eslint-plugin-react": "^7.34.3",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-unused-imports": "^4.0.0",
-    "husky": "^8.0.0",
     "prettier": "^3.3.2"
   }
 }
