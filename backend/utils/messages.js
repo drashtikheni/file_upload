@@ -13,3 +13,5 @@ module.exports.userCreated = "User created";
 module.exports.userExists = "User already exists";
 
 module.exports.mediaRequired = "Media file is required";
+
+module.exports.notFound = "Not found";

@@ -3,17 +3,19 @@ const fs = require("fs");
 const { env } = require("../utils/javascript");
 const { CLOUDINARY_CONFIGS, HTTP_STATUSES } = require("../utils/constant");
 const AppError = require("../AppError");
-const { somethingWentWrong } = require("../utils/messages");
+const { somethingWentWrong, notFound } = require("../utils/messages");
 const Media = require("../models/media.model");
 const { pagination } = require("../utils/pagination");
+const { validateId } = require("./index.service");
+require("dotenv").config();
+
+cloudinary.config({
+  cloud_name: env(CLOUDINARY_CONFIGS.CLOUD_NAME),
+  api_key: env(CLOUDINARY_CONFIGS.API_KEY),
+  api_secret: env(CLOUDINARY_CONFIGS.API_SECRET),
+});
 
 module.exports.upload = async (path) => {
-  cloudinary.config({
-    cloud_name: env(CLOUDINARY_CONFIGS.CLOUD_NAME),
-    api_key: env(CLOUDINARY_CONFIGS.API_KEY),
-    api_secret: env(CLOUDINARY_CONFIGS.API_SECRET),
-  });
-
   const uploadedMedia = await cloudinary.uploader
     .upload(path)
     .catch((error) => {
@@ -27,6 +29,10 @@ module.exports.upload = async (path) => {
   fs.unlinkSync(path);
 
   return uploadedMedia;
+};
+
+const removeCloudinaryMedia = async (id) => {
+  await cloudinary.uploader.destroy(id);
 };
 
 module.exports.create = async ({ originalFile, uploadedFile, user }) => {
@@ -52,4 +58,18 @@ module.exports.getAll = async ({ query = {}, user }) => {
   const totalResults = await Media.countDocuments(filterQuery);
 
   return { results, totalResults };
+};
+
+module.exports.deleteMedia = async ({ user, id }) => {
+  validateId(id);
+
+  const deletedMedia = await Media.findOneAndDelete({
+    createdBy: user?._id,
+    _id: id,
+  });
+
+  if (deletedMedia?.publicId) {
+    await removeCloudinaryMedia(deletedMedia?.publicId);
+    return deletedMedia;
+  } else throw new AppError(notFound, HTTP_STATUSES.NOT_FOUND);
 };

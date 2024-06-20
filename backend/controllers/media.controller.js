@@ -1,5 +1,10 @@
 const AppError = require("../AppError");
-const { upload, create, getAll } = require("../services/media.service");
+const {
+  upload,
+  create,
+  getAll,
+  deleteMedia,
+} = require("../services/media.service");
 const { HTTP_STATUSES } = require("../utils/constant");
 const { somethingWentWrong, mediaRequired } = require("../utils/messages");
 
@@ -31,6 +36,23 @@ module.exports.list = async (req, res) => {
     const { results, totalResults } = await getAll({ user, query });
 
     return res.status(HTTP_STATUSES.OK).json({ results, totalResults });
+  } catch (error) {
+    console.log("error", error);
+    return res
+      .status(error.status || HTTP_STATUSES.INTERNAL_SERVER_ERROR)
+      .json({ err: error.message || somethingWentWrong });
+  }
+};
+
+module.exports.delete = async (req, res) => {
+  try {
+    const {
+      user,
+      params: { id },
+    } = req;
+
+    const deletedMedia = await deleteMedia({ user, id });
+    return res.status(HTTP_STATUSES.OK).json({ media: deletedMedia });
   } catch (error) {
     console.log("error", error);
     return res
