@@ -19,3 +19,7 @@ module.exports.ALLOWED_MIME_TYPES = {
   "image/jpeg": "jpeg",
   "image/jpg": "jpg",
 };
+
+module.exports.DEFAULT_PAGE_NO = 1;
+
+module.exports.DEFAULT_PAGE_SIZE = 10;

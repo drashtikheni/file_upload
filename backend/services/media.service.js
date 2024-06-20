@@ -5,6 +5,7 @@ const { CLOUDINARY_CONFIGS, HTTP_STATUSES } = require("../utils/constant");
 const AppError = require("../AppError");
 const { somethingWentWrong } = require("../utils/messages");
 const Media = require("../models/media.model");
+const { pagination } = require("../utils/pagination");
 
 module.exports.upload = async (path) => {
   cloudinary.config({
@@ -38,4 +39,17 @@ module.exports.create = async ({ originalFile, uploadedFile, user }) => {
   });
   const createdMedia = await media.save();
   return createdMedia;
+};
+
+module.exports.getAll = async ({ query = {}, user }) => {
+  const { page, pageSize } = pagination(query);
+
+  const filterQuery = {
+    createdBy: user?._id,
+  };
+
+  const results = await Media.find(filterQuery).limit(pageSize).skip(page);
+  const totalResults = await Media.countDocuments(filterQuery);
+
+  return { results, totalResults };
 };

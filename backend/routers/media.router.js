@@ -13,4 +13,6 @@ mediaRouter.post(
   mediaController.uploadMedia
 );
 
+mediaRouter.get("/", checkAuth, mediaController.list);
+
 module.exports.mediaRouter = mediaRouter;
