@@ -1,0 +1,78 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "overrides": [
+    {
+      "files": ["*.jsx"],
+      "rules": {
+        "no-unused-vars": [
+          "error",
+          { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }
+        ]
+      }
+    }
+  ],
+  "plugins": ["react", "unused-imports", "import", "prettier"],
+  "rules": {
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      { "vars": "all", "args": "after-used", "ignoreRestSiblings": true }
+    ],
+    "prettier/prettier": [
+      "warn",
+      { "arrowParens": "avoid", "endOfLine": "auto" }
+    ],
+    "no-console": "warn",
+    "react-hooks/rules-of-hooks": "off",
+    "no-duplicate-imports": "error",
+    "import/order": [
+      "warn",
+      {
+        "newlines-between": "always",
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling", "index"]
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "import/no-anonymous-default-export": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "no-undef": "error",
+    "no-unused-vars": "error",
+    "arrow-parens": ["warn", "as-needed"],
+    "no-const-assign": "warn",
+    "no-await-in-loop": "error",
+    "no-duplicate-case": "error",
+    "no-dupe-keys": "error",
+    "no-unreachable-loop": "error",
+    "no-unreachable": "warn",
+    "camelcase": "error",
+    "no-empty": "warn",
+    "require-await": "error"
+  }
+}
