@@ -5,4 +5,5 @@ module.exports.HTTP_STATUSES = {
   NOT_FOUND: 404,
   CREATED: 201,
   UNAUTHORIZED: 401,
+  CONFLICT: 409,
 };

@@ -28,9 +28,9 @@ const handleRequests = (app) => {
   app.use(bodyParser.json());
   app.use(cors());
 
-  app.use(errorHandler);
-
   app.use("/auth", authRouter);
+
+  app.use(errorHandler);
 };
 
 exports.initializeExpress = initializeExpress;

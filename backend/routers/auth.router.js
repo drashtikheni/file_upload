@@ -11,4 +11,10 @@ authRouter.post(
   authController.login
 );
 
+authRouter.post(
+  "/register",
+  [check("username").not().isEmpty(), check("password").isStrongPassword()],
+  authController.signup
+);
+
 module.exports.authRouter = authRouter;
