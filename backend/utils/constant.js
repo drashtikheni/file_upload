@@ -7,3 +7,15 @@ module.exports.HTTP_STATUSES = {
   UNAUTHORIZED: 401,
   CONFLICT: 409,
 };
+
+module.exports.CLOUDINARY_CONFIGS = {
+  API_KEY: "CLOUDINARY_API_KEY",
+  API_SECRET: "CLOUDINARY_API_SECRET",
+  CLOUD_NAME: "CLOUDINARY_CLOUD_NAME",
+};
+
+module.exports.ALLOWED_MIME_TYPES = {
+  "image/png": "png",
+  "image/jpeg": "jpeg",
+  "image/jpg": "jpg",
+};

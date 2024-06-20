@@ -3,6 +3,7 @@ const cors = require("cors");
 const { initializeMongoose } = require("./mongoose");
 const errorHandler = require("./middleware/error.middleware");
 const { authRouter } = require("./routers/auth.router");
+const { mediaRouter } = require("./routers/media.router");
 
 const initializeExpress = (http) => {
   const PORT = process.env.PORT || 3001;
@@ -29,6 +30,7 @@ const handleRequests = (app) => {
   app.use(cors());
 
   app.use("/auth", authRouter);
+  app.use("/media", mediaRouter);
 
   app.use(errorHandler);
 };
