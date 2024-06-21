@@ -1,5 +1,3 @@
-export const ME = '/me'
-
 export const GET = 'GET'
 
 export const POST = 'POST'
@@ -11,6 +9,8 @@ export const DELETE = 'DELETE'
 export const LOGIN = 'auth/login'
 
 export const SIGNUP = 'auth/register'
+
+export const ME = 'auth/me'
 
 export const HTTP_STATUSES = {
   INTERNAL_SERVER_ERROR: 500,

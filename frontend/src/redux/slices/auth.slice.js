@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import { GET, ME } from '../../constants/apiPath.constant'
+import { ME } from '../../constants/apiPath.constant'
 import { EMPTY_OBJECT } from '../../constants/index.constant'
 import { api } from '../../utils/api'
 
@@ -11,7 +11,7 @@ const initialState = {
 
 export const fetchCurrentUser = createAsyncThunk(ME, async () => {
   try {
-    const res = await api(GET, ME, true)
+    const res = await api({ endpoint: ME })
     return res
   } catch (error) {
     throw new Error(error.message)
@@ -33,7 +33,7 @@ const auth = createSlice({
       })
       .addCase(fetchCurrentUser.fulfilled, (state, action) => {
         state.isLoading = false
-        state.data = action.payload
+        state.data = action.payload?.data?.user
       })
       .addCase(fetchCurrentUser.rejected, state => {
         state.isLoading = false

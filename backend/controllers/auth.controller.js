@@ -72,3 +72,9 @@ module.exports.signup = async (req, res) => {
       .json({ err: err.message || JSON.stringify(err) });
   }
 };
+
+module.exports.me = (req, res) => {
+  const { user } = req;
+  delete user.password;
+  return res.status(HTTP_STATUSES.OK).json({ user });
+};

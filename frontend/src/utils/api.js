@@ -1,21 +1,24 @@
 import axios from 'axios'
 
+import { GET } from '../constants/apiPath.constant'
+import { REACT_APP_API_URL, TOKEN } from '../constants/index.constant'
 import { env } from './javascript'
 import { loadStateFn } from './localStorage'
-import {
-  EMPTY_OBJECT,
-  REACT_APP_API_URL,
-  TOKEN,
-} from '../constants/index.constant'
 
-export const api = async ({ method, endpoint, isToken, body, cancelToken }) => {
+export const api = async ({
+  method = GET,
+  endpoint,
+  isToken = true,
+  body,
+  cancelToken,
+}) => {
   try {
     const baseURL = env(REACT_APP_API_URL)
 
     const config = {
       url: `${baseURL}/${endpoint}`,
       method,
-      headers: EMPTY_OBJECT,
+      headers: {},
       data: body,
       cancelToken,
     }
