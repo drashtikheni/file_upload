@@ -8,12 +8,13 @@ import {
   ROOT_URL,
   SIGNUP_URL,
 } from '../../constants/pageRoutes.constant'
-import AuthRoute from './AuthRoute'
 import Login from '../auth/Login'
-import ProtectedRoute from './ProtectedRoute'
-import Header from '../layout/Header'
-import Dashboard from '../dashboard'
 import Signup from '../auth/Signup'
+import Dashboard from '../dashboard'
+import Header from '../layout/Header'
+import NotFound from '../notFound'
+import AuthRoute from './AuthRoute'
+import ProtectedRoute from './ProtectedRoute'
 
 const Routing = () => {
   const routes = useRoutes([
@@ -47,7 +48,7 @@ const Routing = () => {
         </AuthRoute>
       ),
     },
-    // { path: '*', element: <PageNotFound /> },
+    { path: '*', element: <NotFound /> },
   ])
 
   return routes
