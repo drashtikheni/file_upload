@@ -1,4 +1,4 @@
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, Row } from 'antd'
 import React, { memo } from 'react'
 
 import { formFieldTypes } from '../description/login.description'
@@ -33,17 +33,18 @@ const FUForm = ({
           )}
         </Form.Item>
       ))}
-
-      <Form.Item label={' '} colon={false}>
-        <Button
-          type="primary"
-          htmlType="submit"
-          disabled={isSubmitLoading}
-          loading={isSubmitLoading}
-        >
-          {submitLabel}
-        </Button>
-      </Form.Item>
+      <Row align={'center'}>
+        <Form.Item colon={false}>
+          <Button
+            type="primary"
+            htmlType="submit"
+            disabled={isSubmitLoading}
+            loading={isSubmitLoading}
+          >
+            {submitLabel}
+          </Button>
+        </Form.Item>
+      </Row>
 
       <Button type="link" onClick={onLinkClick}>
         {linkLabel}

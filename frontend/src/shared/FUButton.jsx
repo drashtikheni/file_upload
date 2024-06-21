@@ -9,9 +9,22 @@ const FUButton = ({
   children,
   onClick,
   icon,
+  danger,
+  className,
 }) => {
   return (
-    <Button {...{ type, htmlType, disabled, loading, onClick, icon }}>
+    <Button
+      {...{
+        type,
+        className,
+        htmlType,
+        disabled,
+        loading,
+        onClick,
+        icon,
+        danger,
+      }}
+    >
       {children}
     </Button>
   )

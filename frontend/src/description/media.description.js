@@ -37,3 +37,8 @@ export const cardViewFields = [
     valueKey: 'createdAt',
   },
 ]
+
+export const selection = {
+  select: 'Select all',
+  deselect: 'Deselect all',
+}

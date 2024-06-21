@@ -15,7 +15,11 @@
   flex-direction: column;
   align-items: flex-start;
 }
-
+.space-container .ant-checkbox-wrapper {
+  position: absolute;
+  z-index: 1;
+  padding: 18px;
+}
 @media (max-width: 1200px) {
   .card-container {
     flex: 1 1 calc(33.33% - 16px);
@@ -41,9 +45,46 @@
 
 .uploaded-file-container {
   display: flex;
-  padding: 10px;
+  padding: 15px 10px;
+}
+.uploaded-file {
+  display: flex;
+}
+.uploaded-file .ant-upload-list-text {
+  margin-left: 10px;
 }
 
-.uploaded-file-container .ant-upload-wrapper {
+.main-container {
+  max-height: calc(100vh - 154px);
+  overflow: auto;
+}
+
+@media only screen and (max-width: 600px) {
+  .uploaded-file-container {
+    display: block;
+    width: 100%;
+  }
+  .uploaded-file-container .upload-button {
+    margin-top: 10px;
+    width: 100%;
+  }
+  .uploaded-file .ant-upload-list-text {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .main-container {
+    max-height: calc(100vh - 196px);
+  }
+}
+.btn-delete {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  min-height: 52px;
+}
+
+.btn-delete button {
+  margin-right: 10px;
 }

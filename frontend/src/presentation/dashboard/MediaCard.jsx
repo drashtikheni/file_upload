@@ -40,10 +40,7 @@ const MediaCard = ({ media, deleting, removeMedia }) => {
         </Modal>
       )}
       <Card
-        style={{
-          width: 260,
-          height: 250,
-        }}
+        style={{ width: '280px', padding: '15px' }}
         hoverable
         cover={
           <Image
@@ -51,6 +48,7 @@ const MediaCard = ({ media, deleting, removeMedia }) => {
             src={media?.link}
             className={classNames('card-cover')}
             height={250}
+            width={250}
             style={{ objectFit: 'cover' }}
           />
         }

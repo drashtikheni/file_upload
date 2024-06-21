@@ -9,17 +9,21 @@ import {
 } from '../description/media.description'
 import { areEqualProps, gt, length } from '../utils/javascript'
 import FUButton from './FUButton'
+import classNames from 'classnames'
+
+import '../presentation/dashboard/Dashboard.css'
 
 const FUUpload = ({ onUpload, uploading }) => {
   const { removeFile, beforeUpload, fileList, uploadMedia } = uploadContainer()
 
   return (
-    <>
+    <div className={classNames('uploaded-file-container')}>
       <Upload
         accept=".jpg,.jpeg,.png"
         fileList={fileList}
         onRemove={removeFile}
         beforeUpload={beforeUpload}
+        className={classNames('uploaded-file')}
       >
         <FUButton icon={<UploadOutlined />}>{pickFileLabel}</FUButton>
       </Upload>
@@ -28,10 +32,11 @@ const FUUpload = ({ onUpload, uploading }) => {
         onClick={() => uploadMedia(onUpload)}
         disabled={!gt(length(fileList))}
         loading={uploading}
+        className={classNames('upload-button')}
       >
         {uploading ? uploadingStatus.uploading : uploadingStatus.startUpload}
       </FUButton>
-    </>
+    </div>
   )
 }
 
