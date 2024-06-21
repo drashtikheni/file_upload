@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import {
+  DEFAULT_PAGE_NO,
   DEFAULT_PAGE_SIZE,
   DELETE,
   HTTP_STATUSES,
@@ -19,13 +20,22 @@ import {
   setNextPage,
 } from '../redux/slices/media.slice'
 import { api } from '../utils/api'
-import { equal, head } from '../utils/javascript'
+import {
+  checkIncludes,
+  equal,
+  gt,
+  head,
+  length,
+  uniqueArray,
+} from '../utils/javascript'
 import { mediaRemoved, somethingWentWrong } from '../utils/messages'
 import { queryString } from '../utils/querystring'
 
 const mediaContainer = () => {
   const [uploading, setUploading] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [selectedMedias, setSelectedMedias] = useState([])
   const { dispatch, selector } = useRedux()
   const { success, error } = useToast()
   const { page, data, isLoading, hasMore } = selector(getMediaState)
@@ -65,19 +75,43 @@ const mediaContainer = () => {
     } else error(res?.err)
   }
 
-  const removeMedia = async id => {
+  const removeMedia = async ids => {
     setDeleting(true)
 
-    const res = await api({ method: DELETE, endpoint: `${MEDIA}/${id}` })
+    const res = await api({ method: DELETE, endpoint: MEDIA, body: { ids } })
 
     setDeleting(false)
 
     if (equal(res?.status, HTTP_STATUSES.OK)) {
+      setSelectedMedias(medias =>
+        medias.filter(media => !checkIncludes(media, ids)),
+      )
       success(mediaRemoved)
-      dispatch(filterMedia(id))
-      fetchMedia(page)
+      closeDeleteModal()
+
+      const remainingMedias = length(data) - length(ids)
+
+      dispatch(filterMedia(ids))
+
+      const newPageNumber = gt(length(remainingMedias))
+        ? remainingMedias / DEFAULT_PAGE_SIZE
+        : DEFAULT_PAGE_NO
+
+      fetchMedia(newPageNumber)
     } else error(res?.err || somethingWentWrong)
   }
+
+  const onSelectionChange = (id, { target: { checked: selected } }) => {
+    if (selected) setSelectedMedias(medias => uniqueArray([...medias, id]))
+    else setSelectedMedias(medias => medias.filter(media => !equal(id, media)))
+  }
+
+  const onSelectAllChange = ({ target: { checked: selected } }) => {
+    setSelectedMedias(() => (selected ? data?.map(media => media?._id) : []))
+  }
+
+  const openDeleteModal = () => setShowDeleteModal(true)
+  const closeDeleteModal = () => setShowDeleteModal(false)
 
   return {
     data,
@@ -85,9 +119,15 @@ const mediaContainer = () => {
     deleting,
     hasMore,
     uploading,
+    selectedMedias,
+    showDeleteModal,
     next,
     uploadMedia,
     removeMedia,
+    onSelectionChange,
+    onSelectAllChange,
+    openDeleteModal,
+    closeDeleteModal,
   }
 }
 

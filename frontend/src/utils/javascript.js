@@ -112,3 +112,5 @@ export const downloadFile = async (link, fileName) => {
 
   return response
 }
+
+export const uniqueArray = (arr = []) => [...new Set(arr)]

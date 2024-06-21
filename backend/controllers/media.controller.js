@@ -6,7 +6,11 @@ const {
   deleteMedia,
 } = require("../services/media.service");
 const { HTTP_STATUSES } = require("../utils/constant");
-const { somethingWentWrong, mediaRequired } = require("../utils/messages");
+const {
+  somethingWentWrong,
+  mediaRequired,
+  mediaRemoved,
+} = require("../utils/messages");
 
 module.exports.uploadMedia = async (req, res) => {
   try {
@@ -46,13 +50,11 @@ module.exports.list = async (req, res) => {
 
 module.exports.delete = async (req, res) => {
   try {
-    const {
-      user,
-      params: { id },
-    } = req;
+    const { user } = req;
+    const { ids = [] } = req.body;
 
-    const deletedMedia = await deleteMedia({ user, id });
-    return res.status(HTTP_STATUSES.OK).json({ media: deletedMedia });
+    await deleteMedia({ user, ids });
+    return res.status(HTTP_STATUSES.OK).json({ message: mediaRemoved });
   } catch (error) {
     console.log("error", error);
     return res

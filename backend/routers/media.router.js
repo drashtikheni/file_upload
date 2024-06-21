@@ -15,6 +15,6 @@ mediaRouter.post(
 
 mediaRouter.get("/", checkAuth, mediaController.list);
 
-mediaRouter.delete("/:id", checkAuth, mediaController.delete);
+mediaRouter.delete("/", checkAuth, mediaController.delete);
 
 module.exports.mediaRouter = mediaRouter;

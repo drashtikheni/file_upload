@@ -13,6 +13,8 @@ export const postedAtLabel = 'Posted at: '
 
 export const deleteConfirmation = 'Are you sure you want to delete this?'
 
+export const confirmationTitle = 'Delete confirmation'
+
 export const cardViewFields = [
   {
     label: 'Name: ',

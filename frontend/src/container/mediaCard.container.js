@@ -18,7 +18,7 @@ const mediaCardContainer = ({ media }) => {
   const closeDeleteModal = () => setSelectedMedia(null)
 
   const onDelete = async onDeleteMedia => {
-    await onDeleteMedia(selectedMedia?._id)
+    await onDeleteMedia([selectedMedia?._id])
     closeDeleteModal()
   }
 

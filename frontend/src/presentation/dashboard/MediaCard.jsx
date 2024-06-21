@@ -7,7 +7,10 @@ import { Card, Image, Modal } from 'antd'
 import classNames from 'classnames'
 import React, { memo } from 'react'
 import mediaCardContainer from '../../container/mediaCard.container'
-import { deleteConfirmation } from '../../description/media.description'
+import {
+  confirmationTitle,
+  deleteConfirmation,
+} from '../../description/media.description'
 import { areEqualProps, fileSize, mimeType } from '../../utils/javascript'
 import CardView from './CardView'
 
@@ -27,7 +30,7 @@ const MediaCard = ({ media, deleting, removeMedia }) => {
     <>
       {selectedMedia && (
         <Modal
-          title="Title"
+          title={confirmationTitle}
           open={true}
           onOk={() => onDelete(removeMedia)}
           confirmLoading={deleting}

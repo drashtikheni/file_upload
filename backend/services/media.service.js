@@ -60,16 +60,11 @@ module.exports.getAll = async ({ query = {} }) => {
   return { results, totalResults };
 };
 
-module.exports.deleteMedia = async ({ user, id }) => {
-  validateId(id);
+module.exports.deleteMedia = async ({ user, ids }) => {
+  ids?.forEach((id) => validateId(id));
 
-  const deletedMedia = await Media.findOneAndDelete({
-    createdBy: user?._id,
-    _id: id,
-  });
+  const deletedMedias = await Media.find({ _id: { $in: ids } });
+  await Media.deleteMany({ _id: { $in: ids } });
 
-  if (deletedMedia?.publicId) {
-    await removeCloudinaryMedia(deletedMedia?.publicId);
-    return deletedMedia;
-  } else throw new AppError(notFound, HTTP_STATUSES.NOT_FOUND);
+  deletedMedias.forEach((media) => removeCloudinaryMedia(media?.publicId));
 };
