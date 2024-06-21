@@ -92,6 +92,8 @@ export const kbFileSize = size => (size / 1024).toFixed(1)
 export const fileSize = size =>
   kbFileSize(size) > 512 ? `${mbFileSize(size)} MB` : `${kbFileSize(size)} KB`
 
+export const mimeType = (name = '') => last(name.split('.'))
+
 export const downloadFile = async (link, fileName) => {
   const response = await axios({
     url: link,
