@@ -10,6 +10,8 @@ export const DELETE = 'DELETE'
 
 export const LOGIN = 'auth/login'
 
+export const SIGNUP = 'auth/register'
+
 export const HTTP_STATUSES = {
   INTERNAL_SERVER_ERROR: 500,
   OK: 200,

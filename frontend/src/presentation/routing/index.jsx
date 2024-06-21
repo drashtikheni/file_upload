@@ -1,18 +1,19 @@
 /* eslint-disable no-unused-vars */
-import React, { lazy } from 'react'
+import React from 'react'
 import { useRoutes } from 'react-router-dom'
 
 import {
   DASHBOARD_URL,
   LOGIN_URL,
   ROOT_URL,
+  SIGNUP_URL,
 } from '../../constants/pageRoutes.constant'
-
-const Header = lazy(() => import('../layout/Header'))
-const ProtectedRoute = lazy(() => import('../routing/ProtectedRoute'))
-const Dashboard = lazy(() => import('../dashboard'))
-const Login = lazy(() => import('../auth/Login'))
-const AuthRoute = lazy(() => import('../routing/AuthRoute'))
+import AuthRoute from './AuthRoute'
+import Login from '../auth/Login'
+import ProtectedRoute from './ProtectedRoute'
+import Header from '../layout/Header'
+import Dashboard from '../dashboard'
+import Signup from '../auth/Signup'
 
 const Routing = () => {
   const routes = useRoutes([
@@ -35,6 +36,14 @@ const Routing = () => {
       element: (
         <AuthRoute>
           <Login />
+        </AuthRoute>
+      ),
+    },
+    {
+      path: SIGNUP_URL,
+      element: (
+        <AuthRoute>
+          <Signup />
         </AuthRoute>
       ),
     },

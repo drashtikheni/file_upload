@@ -7,13 +7,13 @@ const authRouter = express.Router();
 
 authRouter.post(
   "/login",
-  [check("username").not().isEmpty(), check("password").isStrongPassword()],
+  [check("username").not().isEmpty(), check("password").not().isEmpty()],
   authController.login
 );
 
 authRouter.post(
   "/register",
-  [check("username").not().isEmpty(), check("password").isStrongPassword()],
+  [check("username").not().isEmpty(), check("password").not().isEmpty()],
   authController.signup
 );
 

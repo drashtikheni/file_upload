@@ -34,12 +34,7 @@ const FUForm = ({
         </Form.Item>
       ))}
 
-      <Form.Item
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}
-      >
+      <Form.Item label={' '} colon={false}>
         <Button
           type="primary"
           htmlType="submit"
@@ -50,16 +45,9 @@ const FUForm = ({
         </Button>
       </Form.Item>
 
-      <Form.Item
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}
-      >
-        <Button type="link" onClick={onLinkClick}>
-          {linkLabel}
-        </Button>
-      </Form.Item>
+      <Button type="link" onClick={onLinkClick}>
+        {linkLabel}
+      </Button>
     </Form>
   )
 }
