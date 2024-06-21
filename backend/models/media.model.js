@@ -5,7 +5,7 @@ const mediaSchema = new mongoose.Schema(
     link: { type: String, required: true },
     name: { type: String, required: true },
     size: { type: Number, required: true },
-    createdBy: { type: mongoose.Types.ObjectId, required: true },
+    createdBy: { type: mongoose.Types.ObjectId, required: true, ref: "user" },
     publicId: { type: String, required: true },
   },
   { timestamps: true }

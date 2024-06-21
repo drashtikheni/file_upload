@@ -1,6 +1,13 @@
-import { useEffect } from 'react'
-import { DEFAULT_PAGE_SIZE, MEDIA } from '../constants/apiPath.constant'
+import { useEffect, useState } from 'react'
+import {
+  DEFAULT_PAGE_SIZE,
+  HTTP_STATUSES,
+  MEDIA,
+  POST,
+} from '../constants/apiPath.constant'
+import { mediaUploaded } from '../description/media.description'
 import useRedux from '../hooks/useRedux.hook'
+import useToast from '../hooks/useToast.hook'
 import {
   getMediaState,
   setIsLoading,
@@ -8,15 +15,18 @@ import {
   setNextPage,
 } from '../redux/slices/media.slice'
 import { api } from '../utils/api'
+import { equal, head } from '../utils/javascript'
 import { queryString } from '../utils/querystring'
 
 const mediaContainer = () => {
+  const [uploading, setUploading] = useState(false)
   const { dispatch, selector } = useRedux()
+  const { success } = useToast()
   const { page, data, isLoading, hasMore } = selector(getMediaState)
 
   useEffect(() => {
     fetchMedia()
-  }, [])
+  }, [page])
 
   const fetchMedia = async () => {
     dispatch(setIsLoading(true))
@@ -34,7 +44,20 @@ const mediaContainer = () => {
 
   const next = () => dispatch(setNextPage())
 
-  return { data, isLoading, hasMore, next }
+  const uploadMedia = async files => {
+    const formData = new FormData()
+    formData.append('media', head(files))
+
+    setUploading(true)
+    const res = await api({ endpoint: MEDIA, body: formData, method: POST })
+    setUploading(false)
+
+    if (equal(res?.status, HTTP_STATUSES.CREATED)) {
+      success(mediaUploaded)
+    }
+  }
+
+  return { data, isLoading, hasMore, uploading, next, uploadMedia }
 }
 
 export default mediaContainer

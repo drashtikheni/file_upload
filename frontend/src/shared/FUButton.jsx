@@ -1,14 +1,20 @@
 import { Button } from 'antd'
 import React, { memo } from 'react'
 
-import { areEqualProps } from '../utils/javascript'
-
-const FUButton = ({ type, htmlType, disabled, loading, children, onClick }) => {
+const FUButton = ({
+  type,
+  htmlType,
+  disabled,
+  loading,
+  children,
+  onClick,
+  icon,
+}) => {
   return (
-    <Button {...{ type, htmlType, disabled, loading, onClick }}>
+    <Button {...{ type, htmlType, disabled, loading, onClick, icon }}>
       {children}
     </Button>
   )
 }
 
-export default memo(FUButton, areEqualProps)
+export default memo(FUButton)

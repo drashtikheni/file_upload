@@ -1,19 +1,24 @@
-import { Card, Row } from 'antd'
+import { Row } from 'antd'
 import classNames from 'classnames'
 import React from 'react'
 import { SCROLL_DIV_ID } from '../../constants/media.constant'
 import mediaContainer from '../../container/media.container'
 import FUEmpty from '../../shared/FUEmpty'
 import FUInfiniteScroll from '../../shared/FUInfiniteScroll'
-import { fileSize, gt, length } from '../../utils/javascript'
-
-const { Meta } = Card
+import FUUpload from '../../shared/FUUpload'
+import { gt, length } from '../../utils/javascript'
+import MediaCard from './MediaCard'
 
 const Dashboard = () => {
-  const { data, isLoading, hasMore, next } = mediaContainer()
+  const { data, isLoading, hasMore, uploading, uploadMedia, next } =
+    mediaContainer()
 
   return (
     <div>
+      <div className={classNames('upload-media-container')}>
+        <FUUpload uploading={uploading} onUpload={uploadMedia} />
+      </div>
+
       {!gt(length(data)) && !isLoading ? (
         <FUEmpty />
       ) : (
@@ -29,25 +34,7 @@ const Dashboard = () => {
             <Row className={classNames('card-grid')}>
               {data?.map(media => (
                 <div key={media?._id} className={classNames('card-container')}>
-                  <Card
-                    style={{
-                      width: 240,
-                      height: 250,
-                    }}
-                    hoverable
-                    cover={
-                      <img
-                        alt={media?.name}
-                        src={media?.link}
-                        className={classNames('card-cover')}
-                      />
-                    }
-                  >
-                    <Meta
-                      title={media?.name}
-                      description={fileSize(media?.size)}
-                    />
-                  </Card>
+                  <MediaCard media={media} />
                 </div>
               ))}
             </Row>

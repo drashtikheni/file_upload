@@ -1,9 +1,9 @@
-import { Spin } from 'antd'
 import React from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { EMPTY_COUNT } from '../constants/index.constant'
 import { noMoreDataLabel } from '../description/common.description'
 import { gt } from '../utils/javascript'
+import FUSpin from './FUSpin'
 import FUTypography from './FUTypography'
 
 const FUInfiniteScroll = ({
@@ -25,7 +25,7 @@ const FUInfiniteScroll = ({
       hasMore={hasMore}
       scrollableTarget={scrollableTarget}
       className={className}
-      loader={isLoading && <Spin />}
+      loader={isLoading && <FUSpin />}
     >
       {children}
     </InfiniteScroll>

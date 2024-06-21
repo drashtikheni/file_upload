@@ -50,7 +50,11 @@ module.exports.create = async ({ originalFile, uploadedFile, user }) => {
 module.exports.getAll = async ({ query = {} }) => {
   const { page, pageSize } = pagination(query);
 
-  const results = await Media.find({}).limit(pageSize).skip(page);
+  const results = await Media.find({})
+    .limit(pageSize)
+    .skip(page)
+    .sort({ createdAt: -1 })
+    .populate("createdBy", "username");
   const totalResults = await Media.countDocuments({});
 
   return { results, totalResults };
