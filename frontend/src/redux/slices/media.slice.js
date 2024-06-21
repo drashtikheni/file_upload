@@ -6,7 +6,7 @@ import {
 } from '../../constants/apiPath.constant'
 import { EMPTY_ARRAY } from '../../constants/index.constant'
 import {
-  equal,
+  checkIncludes,
   gt,
   gte,
   length,
@@ -42,7 +42,7 @@ const media = createSlice({
 
       state.data = gt(currentState?.page, DEFAULT_PAGE_NO)
         ? removeUniqueArray([
-            ...(currentState?.results || EMPTY_ARRAY),
+            ...(currentState?.data || EMPTY_ARRAY),
             ...(action?.payload?.results || EMPTY_ARRAY),
           ])
         : action.payload?.results || EMPTY_ARRAY
@@ -54,7 +54,7 @@ const media = createSlice({
     filterMedia: (state, action) => {
       const currentState = current(state)
       state.data = currentState?.data?.filter(
-        media => !equal(media?._id, action.payload),
+        media => !checkIncludes(media?._id, action.payload),
       )
     },
   },

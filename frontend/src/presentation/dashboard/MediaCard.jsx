@@ -50,6 +50,8 @@ const MediaCard = ({ media, deleting, removeMedia }) => {
             alt={media?.name}
             src={media?.link}
             className={classNames('card-cover')}
+            height={250}
+            style={{ objectFit: 'cover' }}
           />
         }
         actions={[

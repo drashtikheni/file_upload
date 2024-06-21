@@ -5,7 +5,7 @@ module.exports.pagination = (query = {}) => {
   if (isNaN(page)) page = DEFAULT_PAGE_NO;
   if (isNaN(pageSize)) pageSize = DEFAULT_PAGE_SIZE;
 
-  page = page > DEFAULT_PAGE_NO ? page * pageSize : 0;
+  page = page > DEFAULT_PAGE_NO ? (+page - 1) * pageSize : 0;
 
   return { page, pageSize };
 };

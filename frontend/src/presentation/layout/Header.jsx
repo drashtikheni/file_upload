@@ -20,9 +20,9 @@ const Header = ({ children }) => {
   if (isLoading) return <FUSpin />
 
   return (
-    <Layout style={{ height: '100vh' }}>
+    <Layout style={{ height: 'calc(100vh - 40px)' }}>
       <AntHeader className={classNames('header-container')}>
-        <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <FUTypography className={classNames('header-username')}>
             {data?.username}
           </FUTypography>

@@ -28,9 +28,6 @@ const FUUpload = ({ onUpload, uploading }) => {
         onClick={() => uploadMedia(onUpload)}
         disabled={!gt(length(fileList))}
         loading={uploading}
-        style={{
-          marginTop: 16,
-        }}
       >
         {uploading ? uploadingStatus.uploading : uploadingStatus.startUpload}
       </FUButton>

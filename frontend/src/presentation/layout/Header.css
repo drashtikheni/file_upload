@@ -3,10 +3,17 @@
   top: 0;
   z-index: 1;
   width: '100%';
+  align-items: center;
+  height: 40px;
+}
+
+.header {
   display: 'flex';
-  align-items: 'center';
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header-username {
   color: white;
+  line-height: 2.8;
 }

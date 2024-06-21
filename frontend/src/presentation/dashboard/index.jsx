@@ -1,5 +1,5 @@
 import { DeleteOutlined } from '@ant-design/icons'
-import { Checkbox, Modal, Row } from 'antd'
+import { Checkbox, Col, Modal, Row, Space } from 'antd'
 import classNames from 'classnames'
 import React from 'react'
 import { SCROLL_DIV_ID } from '../../constants/media.constant'
@@ -34,7 +34,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <div className={classNames('upload-media-container')}>
+      <div className={classNames('uploaded-file-container')}>
         {gt(length(selectedMedias)) && (
           <DeleteOutlined onClick={openDeleteModal} />
         )}
@@ -54,41 +54,56 @@ const Dashboard = () => {
         </Modal>
       )}
 
-      <Checkbox
-        checked={
-          equal(length(data), length(selectedMedias)) &&
-          gt(length(selectedMedias))
-        }
-        onChange={onSelectAllChange}
-      />
-
+      {gt(length(data)) && (
+        <Checkbox
+          checked={
+            equal(length(data), length(selectedMedias)) &&
+            gt(length(selectedMedias))
+          }
+          onChange={onSelectAllChange}
+        />
+      )}
       {!gt(length(data)) && !isLoading ? (
         <FUEmpty />
       ) : (
-        <div className={classNames('media-cards-container')}>
+        <div
+          style={{ maxHeight: 'calc(100vh - 114px)', overflowY: 'auto' }}
+          id={SCROLL_DIV_ID}
+        >
           <FUInfiniteScroll
             scrollableTarget={SCROLL_DIV_ID}
             next={next}
             hasMore={hasMore}
-            className={classNames('media-cards-container')}
             dataLength={length(data)}
             isLoading={isLoading}
           >
-            <Row className={classNames('card-grid')}>
+            <Row className={classNames('card-grid')} gutter={[24, 16]}>
               {data?.map(media => (
-                <div key={media?._id} className={classNames('card-container')}>
-                  <Checkbox
-                    checked={checkIncludes(media?._id, selectedMedias)}
-                    onChange={selected =>
-                      onSelectionChange(media?._id, selected)
-                    }
-                  />
-                  <MediaCard
-                    media={media}
-                    deleting={deleting}
-                    removeMedia={removeMedia}
-                  />
-                </div>
+                <Col
+                  xs={24}
+                  sm={24}
+                  md={8}
+                  xl={8}
+                  xxl={4}
+                  key={media?._id}
+                  className={classNames('card-container')}
+                >
+                  <Space>
+                    <div className={classNames('space-container')}>
+                      <Checkbox
+                        checked={checkIncludes(media?._id, selectedMedias)}
+                        onChange={selected =>
+                          onSelectionChange(media?._id, selected)
+                        }
+                      />
+                      <MediaCard
+                        media={media}
+                        deleting={deleting}
+                        removeMedia={removeMedia}
+                      />
+                    </div>
+                  </Space>
+                </Col>
               ))}
             </Row>
           </FUInfiniteScroll>
