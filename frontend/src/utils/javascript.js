@@ -1,3 +1,5 @@
+import axios from 'axios'
+import { GET } from '../constants/apiPath.constant'
 import { ID } from '../constants/formFields.constant'
 import {
   BOOLEAN,
@@ -89,3 +91,22 @@ export const kbFileSize = size => (size / 1024).toFixed(1)
 
 export const fileSize = size =>
   kbFileSize(size) > 512 ? `${mbFileSize(size)} MB` : `${kbFileSize(size)} KB`
+
+export const downloadFile = async (link, fileName) => {
+  const response = await axios({
+    url: link,
+    method: GET,
+    responseType: 'blob',
+  })
+
+  const blob = new Blob([response.data])
+  const url = window.URL.createObjectURL(blob)
+  const linkElement = document.createElement('a')
+  linkElement.href = url
+  linkElement.setAttribute('download', fileName)
+  document.body.appendChild(linkElement)
+  linkElement.click()
+  linkElement.remove()
+
+  return response
+}

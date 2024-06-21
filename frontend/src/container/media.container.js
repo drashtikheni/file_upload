@@ -8,6 +8,7 @@ import {
 import { mediaUploaded } from '../description/media.description'
 import useRedux from '../hooks/useRedux.hook'
 import useToast from '../hooks/useToast.hook'
+import { getAuthState } from '../redux/slices/auth.slice'
 import {
   addMedia,
   getMediaState,
@@ -22,8 +23,9 @@ import { queryString } from '../utils/querystring'
 const mediaContainer = () => {
   const [uploading, setUploading] = useState(false)
   const { dispatch, selector } = useRedux()
-  const { success } = useToast()
+  const { success, error } = useToast()
   const { page, data, isLoading, hasMore } = selector(getMediaState)
+  const { data: currentUser } = selector(getAuthState)
 
   useEffect(() => {
     fetchMedia()
@@ -55,8 +57,8 @@ const mediaContainer = () => {
 
     if (equal(res?.status, HTTP_STATUSES.CREATED)) {
       success(mediaUploaded)
-      dispatch(addMedia(res.data?.media))
-    }
+      dispatch(addMedia({ ...res.data?.media, createdBy: currentUser }))
+    } else error(res?.err)
   }
 
   return { data, isLoading, hasMore, uploading, next, uploadMedia }
