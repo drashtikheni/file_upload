@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import {
   DEFAULT_PAGE_SIZE,
+  DELETE,
   HTTP_STATUSES,
   MEDIA,
   POST,
@@ -11,6 +12,7 @@ import useToast from '../hooks/useToast.hook'
 import { getAuthState } from '../redux/slices/auth.slice'
 import {
   addMedia,
+  filterMedia,
   getMediaState,
   setIsLoading,
   setMedia,
@@ -18,10 +20,12 @@ import {
 } from '../redux/slices/media.slice'
 import { api } from '../utils/api'
 import { equal, head } from '../utils/javascript'
+import { mediaRemoved, somethingWentWrong } from '../utils/messages'
 import { queryString } from '../utils/querystring'
 
 const mediaContainer = () => {
   const [uploading, setUploading] = useState(false)
+  const [deleting, setDeleting] = useState(false)
   const { dispatch, selector } = useRedux()
   const { success, error } = useToast()
   const { page, data, isLoading, hasMore } = selector(getMediaState)
@@ -31,11 +35,11 @@ const mediaContainer = () => {
     fetchMedia()
   }, [page])
 
-  const fetchMedia = async () => {
+  const fetchMedia = async pageNo => {
     dispatch(setIsLoading(true))
 
     const params = {
-      page,
+      page: pageNo || page,
       pageSize: DEFAULT_PAGE_SIZE,
     }
 
@@ -61,7 +65,30 @@ const mediaContainer = () => {
     } else error(res?.err)
   }
 
-  return { data, isLoading, hasMore, uploading, next, uploadMedia }
+  const removeMedia = async id => {
+    setDeleting(true)
+
+    const res = await api({ method: DELETE, endpoint: `${MEDIA}/${id}` })
+
+    setDeleting(false)
+
+    if (equal(res?.status, HTTP_STATUSES.OK)) {
+      success(mediaRemoved)
+      dispatch(filterMedia(id))
+      fetchMedia(page)
+    } else error(res?.err || somethingWentWrong)
+  }
+
+  return {
+    data,
+    isLoading,
+    deleting,
+    hasMore,
+    uploading,
+    next,
+    uploadMedia,
+    removeMedia,
+  }
 }
 
 export default mediaContainer

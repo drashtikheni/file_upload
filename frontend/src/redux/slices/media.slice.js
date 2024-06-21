@@ -6,6 +6,7 @@ import {
 } from '../../constants/apiPath.constant'
 import { EMPTY_ARRAY } from '../../constants/index.constant'
 import {
+  equal,
   gt,
   gte,
   length,
@@ -50,10 +51,17 @@ const media = createSlice({
       const currentState = current(state)
       state.data = [action.payload, ...(currentState.data || EMPTY_ARRAY)]
     },
+    filterMedia: (state, action) => {
+      const currentState = current(state)
+      state.data = currentState?.data?.filter(
+        media => !equal(media?._id, action.payload),
+      )
+    },
   },
 })
 
-export const { setIsLoading, setNextPage, setMedia, addMedia } = media.actions
+export const { setIsLoading, setNextPage, setMedia, addMedia, filterMedia } =
+  media.actions
 
 export const getMediaState = state => state.media
 

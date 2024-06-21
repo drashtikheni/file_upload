@@ -10,8 +10,16 @@ import { gt, length } from '../../utils/javascript'
 import MediaCard from './MediaCard'
 
 const Dashboard = () => {
-  const { data, isLoading, hasMore, uploading, uploadMedia, next } =
-    mediaContainer()
+  const {
+    data,
+    isLoading,
+    hasMore,
+    uploading,
+    deleting,
+    uploadMedia,
+    removeMedia,
+    next,
+  } = mediaContainer()
 
   return (
     <div>
@@ -34,7 +42,11 @@ const Dashboard = () => {
             <Row className={classNames('card-grid')}>
               {data?.map(media => (
                 <div key={media?._id} className={classNames('card-container')}>
-                  <MediaCard media={media} />
+                  <MediaCard
+                    media={media}
+                    deleting={deleting}
+                    removeMedia={removeMedia}
+                  />
                 </div>
               ))}
             </Row>
