@@ -1,11 +1,13 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 
-import authSlice from './slices/auth.slice'
 import { LOGOUT } from '../constants/index.constant'
 import { equal } from '../utils/javascript'
+import authSlice from './slices/auth.slice'
+import mediaSlice from './slices/media.slice'
 
 const appReducer = combineReducers({
   auth: authSlice,
+  media: mediaSlice,
 })
 
 const reducerProxy = (state, action) => {

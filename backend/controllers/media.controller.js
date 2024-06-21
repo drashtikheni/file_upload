@@ -32,8 +32,8 @@ module.exports.uploadMedia = async (req, res) => {
 
 module.exports.list = async (req, res) => {
   try {
-    const { user, query } = req;
-    const { results, totalResults } = await getAll({ user, query });
+    const { query } = req;
+    const { results, totalResults } = await getAll({ query });
 
     return res.status(HTTP_STATUSES.OK).json({ results, totalResults });
   } catch (error) {

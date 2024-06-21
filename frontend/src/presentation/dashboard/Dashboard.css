@@ -1,0 +1,41 @@
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.card-container {
+  flex: 1 1 calc(25% - 16px);
+  box-sizing: border-box;
+  margin: 8px;
+  min-width: 250px;
+}
+
+@media (max-width: 1200px) {
+  .card-container {
+    flex: 1 1 calc(33.33% - 16px);
+  }
+}
+
+@media (max-width: 992px) {
+  .card-container {
+    flex: 1 1 calc(50% - 16px);
+  }
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    flex: 1 1 calc(100% - 16px);
+  }
+}
+
+.card-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.media-cards-container {
+  overflow-y: auto;
+  max-height: 300;
+}

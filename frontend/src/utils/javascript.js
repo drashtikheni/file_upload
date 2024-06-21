@@ -82,3 +82,10 @@ export const removeUniqueArray = (arr, type = ID) => {
 export const newArray = (length = EMPTY_COUNT) => Array.from({ length })
 
 export const entries = value => (value ? Object.entries(value) : null)
+
+export const mbFileSize = size => (size / 1024 / 1024).toFixed(1)
+
+export const kbFileSize = size => (size / 1024).toFixed(1)
+
+export const fileSize = size =>
+  kbFileSize(size) > 512 ? `${mbFileSize(size)} MB` : `${kbFileSize(size)} KB`

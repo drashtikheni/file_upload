@@ -12,6 +12,8 @@ export const SIGNUP = 'auth/register'
 
 export const ME = 'auth/me'
 
+export const MEDIA = 'media'
+
 export const HTTP_STATUSES = {
   INTERNAL_SERVER_ERROR: 500,
   OK: 200,
@@ -21,3 +23,7 @@ export const HTTP_STATUSES = {
   UNAUTHORIZED: 401,
   CONFLICT: 409,
 }
+
+export const DEFAULT_PAGE_SIZE = 10
+
+export const DEFAULT_PAGE_NO = 1

@@ -47,15 +47,11 @@ module.exports.create = async ({ originalFile, uploadedFile, user }) => {
   return createdMedia;
 };
 
-module.exports.getAll = async ({ query = {}, user }) => {
+module.exports.getAll = async ({ query = {} }) => {
   const { page, pageSize } = pagination(query);
 
-  const filterQuery = {
-    createdBy: user?._id,
-  };
-
-  const results = await Media.find(filterQuery).limit(pageSize).skip(page);
-  const totalResults = await Media.countDocuments(filterQuery);
+  const results = await Media.find({}).limit(pageSize).skip(page);
+  const totalResults = await Media.countDocuments({});
 
   return { results, totalResults };
 };
