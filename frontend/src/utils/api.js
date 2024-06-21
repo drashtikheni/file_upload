@@ -8,7 +8,7 @@ import {
   TOKEN,
 } from '../constants/index.constant'
 
-export const api = async (method, endpoint, isToken, body, cancelToken) => {
+export const api = async ({ method, endpoint, isToken, body, cancelToken }) => {
   try {
     const baseURL = env(REACT_APP_API_URL)
 

@@ -15,7 +15,7 @@ module.exports.login = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
       return res
-        .status(HTTP_STATUSES.UNAUTHORIZED)
+        .status(HTTP_STATUSES.BAD_REQUEST)
         .json({ err: invalidDataProvided });
 
     const { username, password } = req.body;
@@ -29,7 +29,7 @@ module.exports.login = async (req, res) => {
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword)
       return res
-        .status(HTTP_STATUSES.UNAUTHORIZED)
+        .status(HTTP_STATUSES.BAD_REQUEST)
         .json({ err: invalidCredentials });
 
     const token = jwt.sign({ ...user }, process.env.JWT_KEY);
@@ -50,7 +50,7 @@ module.exports.signup = async (req, res) => {
 
     if (!errors.isEmpty())
       return res
-        .status(HTTP_STATUSES.UNAUTHORIZED)
+        .status(HTTP_STATUSES.BAD_REQUEST)
         .json({ err: invalidDataProvided, errors: errors.errors });
 
     const { username, password } = req.body;
