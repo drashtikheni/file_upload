@@ -46,10 +46,14 @@ const media = createSlice({
           ])
         : action.payload?.results || EMPTY_ARRAY
     },
+    addMedia: (state, action) => {
+      const currentState = current(state)
+      state.data = [action.payload, ...(currentState.data || EMPTY_ARRAY)]
+    },
   },
 })
 
-export const { setIsLoading, setNextPage, setMedia } = media.actions
+export const { setIsLoading, setNextPage, setMedia, addMedia } = media.actions
 
 export const getMediaState = state => state.media
 

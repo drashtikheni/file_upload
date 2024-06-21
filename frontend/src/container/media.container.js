@@ -9,6 +9,7 @@ import { mediaUploaded } from '../description/media.description'
 import useRedux from '../hooks/useRedux.hook'
 import useToast from '../hooks/useToast.hook'
 import {
+  addMedia,
   getMediaState,
   setIsLoading,
   setMedia,
@@ -54,6 +55,7 @@ const mediaContainer = () => {
 
     if (equal(res?.status, HTTP_STATUSES.CREATED)) {
       success(mediaUploaded)
+      dispatch(addMedia(res.data?.media))
     }
   }
 

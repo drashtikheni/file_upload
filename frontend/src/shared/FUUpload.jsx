@@ -11,7 +11,7 @@ import { areEqualProps, gt, length } from '../utils/javascript'
 import FUButton from './FUButton'
 
 const FUUpload = ({ onUpload, uploading }) => {
-  const { removeFile, beforeUpload, fileList } = uploadContainer()
+  const { removeFile, beforeUpload, fileList, uploadMedia } = uploadContainer()
 
   return (
     <>
@@ -25,7 +25,7 @@ const FUUpload = ({ onUpload, uploading }) => {
       </Upload>
       <FUButton
         type="primary"
-        onClick={() => onUpload(fileList)}
+        onClick={() => uploadMedia(onUpload)}
         disabled={!gt(length(fileList))}
         loading={uploading}
         style={{

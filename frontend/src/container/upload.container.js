@@ -15,7 +15,12 @@ const uploadContainer = () => {
     return false
   }
 
-  return { fileList, beforeUpload, removeFile }
+  const uploadMedia = async onUpload => {
+    await onUpload(fileList)
+    setFileList([])
+  }
+
+  return { fileList, beforeUpload, removeFile, uploadMedia }
 }
 
 export default uploadContainer

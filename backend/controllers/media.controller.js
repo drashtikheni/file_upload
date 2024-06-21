@@ -21,7 +21,7 @@ module.exports.uploadMedia = async (req, res) => {
       user,
     });
 
-    return res.status(HTTP_STATUSES.OK).json({ media: createdMedia });
+    return res.status(HTTP_STATUSES.CREATED).json({ media: createdMedia });
   } catch (error) {
     console.log("error", error);
     return res
