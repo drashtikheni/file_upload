@@ -1,6 +1,6 @@
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
-import React from 'react'
+import React, { memo } from 'react'
 
 import classNames from 'classnames'
 import headerContainer from '../../container/header.container'
@@ -9,17 +9,18 @@ import FUButton from '../../shared/FUButton'
 import FUSpin from '../../shared/FUSpin'
 import FUTypography from '../../shared/FUTypography'
 
+import { Outlet } from 'react-router-dom'
 import './Header.css'
 
 const { Header: AntHeader } = Layout
 
-const Header = () => {
+const Header = ({ children }) => {
   const { data, isLoading, logout } = headerContainer()
 
   if (isLoading) return <FUSpin />
 
   return (
-    <Layout>
+    <Layout style={{ height: '100vh' }}>
       <AntHeader className={classNames('header-container')}>
         <div>
           <FUTypography className={classNames('header-username')}>
@@ -31,17 +32,11 @@ const Header = () => {
         </div>
       </AntHeader>
       <Content>
-        <div
-          style={{
-            padding: 24,
-            height: '100%',
-          }}
-        >
-          Content
-        </div>
+        <Outlet />
+        {children}
       </Content>
     </Layout>
   )
 }
 
-export default Header
+export default memo(Header)
